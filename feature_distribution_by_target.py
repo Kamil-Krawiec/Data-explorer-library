@@ -3,11 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import kagglehub
 
-def get_all_features_and_targets(df):
-    features = df.columns.tolist()
-
-    return features, features
-
 def feature_distribution_by_target(df, feature, target, directory=None):
   """Plots the distribution of a feature segmented by each category of the target variable.
 
@@ -46,12 +41,16 @@ def save_all_distributions(df, directory):
             if target != feature:
                 feature_distribution_by_target(df, feature, target, directory)
 
+###### TESTS ######
+
 # path = kagglehub.dataset_download("lainguyn123/student-performance-factors")
 # df = pd.read_csv(f"{path}/StudentPerformanceFactors.csv")
 
-data = {'income': [30000, 45000, 60000, 52000, 75000, 28000, 42000, 80000, 38000, 50000],
-        'age': [25, 32, 40, 35, 48, 22, 38, 55, 30, 42],
-        'job_type': ['Blue Collar', 'White Collar', 'White Collar', 'Blue Collar', 'Management', 'Blue Collar', 'White Collar', 'Management', 'Blue Collar', 'White Collar']}
-df = pd.DataFrame(data)
+# data = {'income': [30000, 45000, 60000, 52000, 75000, 28000, 42000, 80000, 38000, 50000],
+#         'age': [25, 32, 40, 35, 48, 22, 38, 55, 30, 42],
+#         'job_type': ['Blue Collar', 'White Collar', 'White Collar', 'Blue Collar', 'Management', 'Blue Collar', 'White Collar', 'Management', 'Blue Collar', 'White Collar']}
+# df = pd.DataFrame(data)
 
-save_all_distributions(df, 'results')
+# save_all_distributions(df, 'results')
+
+#####################
