@@ -16,27 +16,22 @@ def word_frequency_charts(text, include_others=True, n=10):
   words = [word for word in nltk.word_tokenize(text) if re.match(r'\w+', word)]
   word_counts = Counter(words)
 
-  # Sortowanie słów według częstotliwości
   most_common = word_counts.most_common(n)
 
-  # Obliczanie procentów
   total_words = sum(word_counts.values())
   if include_others:
       other_count = total_words - sum(count for word, count in most_common)
       most_common.append(("Others", other_count))
 
-  # Przygotowanie danych do wykresów
   labels = [word for word, _ in most_common]
   sizes = [count / total_words * 100 for _, count in most_common]
      
-  # Wykres kołowy
   plt.figure(figsize=(12, 6))
   plt.subplot(1, 2, 1)
   plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
   plt.axis('equal')
   plt.title('Rozkład częstości słów (kołowy)')
 
-  # Wykres słupkowy
   plt.subplot(1, 2, 2)
   plt.bar(labels, sizes)
   plt.xlabel('Słowa')
