@@ -1,0 +1,60 @@
+----------INITIAL DATA REPORT----------
+Number of rows: 6
+Number of columns: 6
+"Num1" column basic information
+	Column data type: int32
+	Number of non-null values 6
+	Mean: 31.666666666666668
+	Standard Deviation: 23.73745282600192
+	Median: 23.5
+		Modes: 
+		5
+		20
+		22
+		25
+		46
+		72
+	Lowest value : 5
+	Percentile 25.0%: 20.5
+	Percentile 50.0%: 23.5
+	Percentile 75.0%: 40.75
+	Highest value : 72
+"Num2" column basic information
+	Column data type: float64
+	Number of non-null values 6
+	Mean: 60.79420076067907
+	Standard Deviation: 29.539902389168503
+	Median: 64.11342600969066
+		Modes: 
+		6.519077476979119
+		56.37330309955745
+		61.43795792724587
+		66.78889409213544
+		85.04117084528386
+		88.60480112287267
+	Lowest value : 6.519077476979119
+	Percentile 25.0%: 57.639466806479554
+	Percentile 50.0%: 64.11342600969066
+	Percentile 75.0%: 80.47810165699676
+	Highest value : 88.60480112287267
+"Cat1" column basic information
+	Column data type: category
+	Number of non-null values 6
+	Number of unique values: 3
+	Modes: 
+		A
+		B
+		C
+	Frequency: <pandas.core.indexing._iLocIndexer object at 0x0000020E74590810>
+"Cat2" column basic information
+	Column data type: category
+	Number of non-null values 6
+	Number of unique values: 3
+	Mode: X
+	Frequency: <pandas.core.indexing._iLocIndexer object at 0x0000020E74590A40>
+"Mix1" column basic information
+	Column data type: object
+	Number of non-null values 6
+"Mix2" column basic information
+	Column data type: object
+	Number of non-null values 5
