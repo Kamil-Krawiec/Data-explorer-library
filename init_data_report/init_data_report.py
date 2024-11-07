@@ -6,7 +6,26 @@ import pandas as pd
 
 
 def create_initial_data_report(data: pd.DataFrame, print_to_console: bool = True,
-                               save_to_file: bool = None, filename: str = "initial_data_report") -> None:
+                               save_to_file: bool = False, filename: str = "initial_data_report") -> None:
+    """
+    Create the initial data report containing basic information about each of the columns in the provided dataframe.
+    Information in the report consist of: number of rows, number of columns, data type of the column, number of non-null values.
+    Additionally, for numeric columns:
+        - mean
+        - median
+        - mode
+        - lowest value, 25,50,75-percentile, max value
+
+    For categorical columns:
+        - number of unique values
+        - modes
+        - frequency of most common value
+    :param data: DataFrame object containing data in question
+    :param print_to_console: Option to print the report to the console, defaults to True
+    :param save_to_file: Option to save the report to the file, defaults to False
+    :param filename: Option to change the location to which the file is saved, defaults to "initial_data_report"
+    :return:
+    """
     report_string = []
     report_string.append("----------INITIAL DATA REPORT----------\n")
     report_string.append(f"Number of rows: {data.shape[0]}\n")
