@@ -1,13 +1,13 @@
-import scipy.stats as stats
+import random
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
 import seaborn as sns
-import matplotlib.pyplot as plt
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
-import random
 from tqdm import tqdm
 
 
@@ -320,7 +320,7 @@ def feature_importance(
         x=aggregated_importance_series.head(top_n),
         y=aggregated_importance_series.head(top_n).index,
         palette='viridis',
-        hue =aggregated_importance_series.head(top_n).index
+        hue=aggregated_importance_series.head(top_n).index
     )
     plt.title(f'Top {top_n} Feature Rankings')
     plt.xlabel('Aggregated Importance Score')
@@ -330,3 +330,5 @@ def feature_importance(
 
     if verbose:
         print("\nFeature importance analysis completed.")
+
+    return aggregated_importance_series
