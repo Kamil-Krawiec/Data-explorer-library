@@ -332,3 +332,131 @@ def feature_importance(
         print("\nFeature importance analysis completed.")
 
     return aggregated_importance_series
+
+
+def feature_correlation_with_target(df, list_of_feat, target, save_to_file=None):
+    """
+    Calculates and visualizes the correlation coefficients between each feature
+    and the target variable for both categorical and numerical features.
+    Includes violin plots for numeric features and interpretations as text boxes.
+
+    Parameters:
+    - df (pd.DataFrame): The dataset containing the features and target variable.
+    - list_of_feat (list of str): List of feature names to analyze.
+    - target (str): The name of the target variable.
+    - save_to_file (str or None): Folder path to save the plots. If None, plots are not saved.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing correlation values for each feature.
+    """
+    if target not in df.columns:
+        raise ValueError(f"Target column '{target}' not found in the DataFrame.")
+    if not all([feat in df.columns for feat in list_of_feat]):
+        missing = [feat for feat in list_of_feat if feat not in df.columns]
+        raise ValueError(f"The following features are missing in the DataFrame: {missing}")
+
+    # Ensure the target variable is numeric for correlation calculation
+    if not pd.api.types.is_numeric_dtype(df[target]):
+        raise ValueError("Target variable must be numeric for correlation calculation.")
+
+    results = []
+    for feat in list_of_feat:
+        if pd.api.types.is_numeric_dtype(df[feat]):
+            # Pearson correlation for numeric data
+            corr = df[feat].corr(df[target])
+            corr_type = 'Pearson'
+            plot_type = "violin"
+        else:
+            # Cramér's V for categorical data
+            contingency_table = pd.crosstab(df[feat], df[target])
+            chi2 = stats.chi2_contingency(contingency_table)[0]
+            n = df.shape[0]
+            min_dim = min(contingency_table.shape) - 1
+            corr = np.sqrt(chi2 / (n * min_dim))
+            corr_type = "Cramér's V"
+            plot_type = "barplot"
+        results.append({"Feature": feat, "Correlation": corr, "Method": corr_type, "Plot_Type": plot_type})
+
+    # Convert results to DataFrame
+    results_df = pd.DataFrame(results).sort_values(by="Correlation", ascending=False)
+
+    # Visualization and Interpretation
+    for _, row in results_df.iterrows():
+        feat = row['Feature']
+        corr = row['Correlation']
+        corr_type = row['Method']
+
+        if row["Plot_Type"] == "violin":
+            # Violin plot for numeric features
+            plt.figure(figsize=(12, 6))
+            sns.violinplot(x=df[target], y=df[feat], palette='viridis', hue=df[target])
+            plt.title(f"Violin Plot: {feat} vs {target} ({corr_type} Corr = {corr:.2f})")
+            plt.xlabel(target)
+            plt.ylabel(feat)
+
+            # Interpretation for numeric features
+            if corr > 0:
+                interpretation = (
+                    f"Feature '{feat}' is positively correlated with the target.\n"
+                    f"Higher values of '{feat}' tend to be associated with higher values of the target."
+                )
+            elif corr < 0:
+                interpretation = (
+                    f"Feature '{feat}' is negatively correlated with the target.\n"
+                    f"Higher values of '{feat}' tend to be associated with lower values of the target."
+                )
+            else:
+                interpretation = (
+                    f"Feature '{feat}' shows no significant correlation with the target."
+                )
+        else:
+            # Bar plot for categorical features
+            plt.figure(figsize=(12, 6))
+            sns.barplot(x=feat, y=target, data=df, palette='viridis', hue=feat, errorbar=None)
+            plt.title(f"Bar Plot: {feat} vs {target} ({corr_type} Corr = {corr:.2f})")
+            plt.xlabel(feat)
+            plt.ylabel(f"Mean of {target}")
+
+            # Interpretation for categorical features
+            mean_target_by_category = df.groupby(feat)[target].mean().sort_values(ascending=False)
+            best_category = mean_target_by_category.idxmax()
+            worst_category = mean_target_by_category.idxmin()
+            interpretation = (
+                f"Feature '{feat}' is categorical.\n"
+                f"The category '{best_category}' is associated with the highest mean value of the target, "
+                f"while '{worst_category}' is associated with the lowest mean value."
+            )
+
+        # Add interpretation as a textbox below the plot
+        # Add interpretation as a textbox at the bottom center of the plot
+        plt.gcf().text(
+            0.5, -0.06, interpretation,
+            fontsize=10, color="black", wrap=True, ha="center",
+            bbox=dict(facecolor='white', alpha=0.8, edgecolor='gray')
+        )
+
+        # Save or show plot
+        if save_to_file:
+            filename = f"{save_to_file}/{feat}_correlation_plot.png"
+            plt.savefig(filename, bbox_inches="tight")
+            print(f"Saved plot for '{feat}' at {filename}.")
+        else:
+            plt.show()
+
+    # Summary Bar Plot
+    plt.figure(figsize=(12, 8))
+    sns.barplot(x='Correlation', y='Feature', hue='Method', data=results_df, palette='viridis')
+    plt.title(f"Feature Correlation with Target: {target}")
+    plt.xlabel("Correlation Coefficient")
+    plt.ylabel("Features")
+    plt.tight_layout()
+
+    # Save or show summary plot
+    if save_to_file:
+        summary_filename = f"{save_to_file}/summary_correlation_plot.png"
+        plt.savefig(summary_filename, bbox_inches="tight")
+        print(f"Saved summary plot at {summary_filename}.")
+    else:
+        plt.show()
+
+    return results_df
