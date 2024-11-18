@@ -337,7 +337,7 @@ def feature_correlation_with_target(df, list_of_feat, target):
     """
     Calculates and visualizes the correlation coefficients between each feature
     and the target variable for both categorical and numerical features.
-    Includes violin plots for numeric features.
+    Includes violin plots for numeric features and interpretations.
 
     Parameters:
     - df (pd.DataFrame): The dataset containing the features and target variable.
@@ -378,7 +378,7 @@ def feature_correlation_with_target(df, list_of_feat, target):
     # Convert results to DataFrame
     results_df = pd.DataFrame(results).sort_values(by="Correlation", ascending=False)
 
-    # Visualization
+    # Visualization and Interpretation
     for _, row in results_df.iterrows():
         feat = row['Feature']
         corr = row['Correlation']
@@ -387,12 +387,29 @@ def feature_correlation_with_target(df, list_of_feat, target):
         if row["Plot_Type"] == "violin":
             # Violin plot for numeric features
             plt.figure(figsize=(12, 6))
-            sns.violinplot(x=df[target], y=df[feat], palette='viridis', hue=df[target], legend=False)
+            sns.violinplot(x=df[target], y=df[feat], palette='viridis', hue=df[target])
             plt.title(f"Violin Plot: {feat} vs {target} ({corr_type} Corr = {corr:.2f})")
             plt.xlabel(target)
             plt.ylabel(feat)
             plt.tight_layout()
             plt.show()
+
+            # Interpretation for numeric features
+            if corr > 0:
+                interpretation = (
+                    f"Feature '{feat}' is positively correlated with the target. "
+                    f"Higher values of '{feat}' tend to be associated with higher values of the target."
+                )
+            elif corr < 0:
+                interpretation = (
+                    f"Feature '{feat}' is negatively correlated with the target. "
+                    f"Higher values of '{feat}' tend to be associated with lower values of the target."
+                )
+            else:
+                interpretation = (
+                    f"Feature '{feat}' shows no significant correlation with the target."
+                )
+
         else:
             # Bar plot for categorical features
             plt.figure(figsize=(12, 6))
@@ -402,6 +419,19 @@ def feature_correlation_with_target(df, list_of_feat, target):
             plt.ylabel(f"Mean of {target}")
             plt.tight_layout()
             plt.show()
+
+            # Interpretation for categorical features
+            mean_target_by_category = df.groupby(feat)[target].mean().sort_values(ascending=False)
+            best_category = mean_target_by_category.idxmax()
+            worst_category = mean_target_by_category.idxmin()
+            interpretation = (
+                f"Feature '{feat}' is categorical. "
+                f"The category '{best_category}' is associated with the highest mean value of the target, "
+                f"while '{worst_category}' is associated with the lowest mean value."
+            )
+
+        # Display the interpretation
+        print(f"Interpretation for '{feat}':\n{interpretation}\n")
 
     # Summary Bar Plot
     plt.figure(figsize=(12, 8))
