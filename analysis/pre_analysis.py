@@ -333,16 +333,18 @@ def feature_importance(
 
     return aggregated_importance_series
 
-def feature_correlation_with_target(df, list_of_feat, target):
+
+def feature_correlation_with_target(df, list_of_feat, target, save_to_file=None):
     """
     Calculates and visualizes the correlation coefficients between each feature
     and the target variable for both categorical and numerical features.
-    Includes violin plots for numeric features and interpretations.
+    Includes violin plots for numeric features and interpretations as text boxes.
 
     Parameters:
     - df (pd.DataFrame): The dataset containing the features and target variable.
     - list_of_feat (list of str): List of feature names to analyze.
     - target (str): The name of the target variable.
+    - save_to_file (str or None): Folder path to save the plots. If None, plots are not saved.
 
     Returns:
     - pd.DataFrame: A DataFrame containing correlation values for each feature.
@@ -391,47 +393,55 @@ def feature_correlation_with_target(df, list_of_feat, target):
             plt.title(f"Violin Plot: {feat} vs {target} ({corr_type} Corr = {corr:.2f})")
             plt.xlabel(target)
             plt.ylabel(feat)
-            plt.tight_layout()
-            plt.show()
 
             # Interpretation for numeric features
             if corr > 0:
                 interpretation = (
-                    f"Feature '{feat}' is positively correlated with the target. "
+                    f"Feature '{feat}' is positively correlated with the target.\n"
                     f"Higher values of '{feat}' tend to be associated with higher values of the target."
                 )
             elif corr < 0:
                 interpretation = (
-                    f"Feature '{feat}' is negatively correlated with the target. "
+                    f"Feature '{feat}' is negatively correlated with the target.\n"
                     f"Higher values of '{feat}' tend to be associated with lower values of the target."
                 )
             else:
                 interpretation = (
                     f"Feature '{feat}' shows no significant correlation with the target."
                 )
-
         else:
             # Bar plot for categorical features
             plt.figure(figsize=(12, 6))
-            sns.barplot(x=feat, y=target, data=df, palette='viridis', errorbar=None,hue=feat, legend=False)
+            sns.barplot(x=feat, y=target, data=df, palette='viridis', hue=feat, errorbar=None)
             plt.title(f"Bar Plot: {feat} vs {target} ({corr_type} Corr = {corr:.2f})")
             plt.xlabel(feat)
             plt.ylabel(f"Mean of {target}")
-            plt.tight_layout()
-            plt.show()
 
             # Interpretation for categorical features
             mean_target_by_category = df.groupby(feat)[target].mean().sort_values(ascending=False)
             best_category = mean_target_by_category.idxmax()
             worst_category = mean_target_by_category.idxmin()
             interpretation = (
-                f"Feature '{feat}' is categorical. "
+                f"Feature '{feat}' is categorical.\n"
                 f"The category '{best_category}' is associated with the highest mean value of the target, "
                 f"while '{worst_category}' is associated with the lowest mean value."
             )
 
-        # Display the interpretation
-        print(f"Interpretation for '{feat}':\n{interpretation}\n")
+        # Add interpretation as a textbox below the plot
+        # Add interpretation as a textbox at the bottom center of the plot
+        plt.gcf().text(
+            0.5, -0.06, interpretation,
+            fontsize=10, color="black", wrap=True, ha="center",
+            bbox=dict(facecolor='white', alpha=0.8, edgecolor='gray')
+        )
+
+        # Save or show plot
+        if save_to_file:
+            filename = f"{save_to_file}/{feat}_correlation_plot.png"
+            plt.savefig(filename, bbox_inches="tight")
+            print(f"Saved plot for '{feat}' at {filename}.")
+        else:
+            plt.show()
 
     # Summary Bar Plot
     plt.figure(figsize=(12, 8))
@@ -440,6 +450,13 @@ def feature_correlation_with_target(df, list_of_feat, target):
     plt.xlabel("Correlation Coefficient")
     plt.ylabel("Features")
     plt.tight_layout()
-    plt.show()
+
+    # Save or show summary plot
+    if save_to_file:
+        summary_filename = f"{save_to_file}/summary_correlation_plot.png"
+        plt.savefig(summary_filename, bbox_inches="tight")
+        print(f"Saved summary plot at {summary_filename}.")
+    else:
+        plt.show()
 
     return results_df
