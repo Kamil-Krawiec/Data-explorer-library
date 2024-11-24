@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 
 setup(
     name='data-science-analysis-library',
-    version='1.0.0',
+    version='1.0.1',
     author='Kamil Krawiec, Maciej Mądry, Maciej Sieroń',
     author_email='kamil.krawiec9977@gmail.com',
     description='A Python package for analyzing and visualizing data.',
@@ -19,6 +19,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.10',
+    python_requires='>=3.9',
     install_requires=install_requires
 )
