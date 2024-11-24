@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def category_proportion_pie(df, column, title=None, filepath=None, n=None, include_others=True):
     """
     Displays the proportion of the top `n` categories within a categorical feature using a pie chart.
@@ -15,9 +16,9 @@ def category_proportion_pie(df, column, title=None, filepath=None, n=None, inclu
     """
     if column not in df.columns:
         raise ValueError(f"The column '{column}' is not in the DataFrame.")
-    
+
     category_counts = df[column].value_counts()
-    
+
     if n is not None and n < len(category_counts):
         top_categories = category_counts[:n]
         if include_others:
@@ -29,7 +30,7 @@ def category_proportion_pie(df, column, title=None, filepath=None, n=None, inclu
     total = category_counts.sum()
     proportions = category_counts / total * 100
 
-    labels = [f"'{cat}' ({count} | {proportion:.1f}%)" 
+    labels = [f"'{cat}' ({count} | {proportion:.1f}%)"
               for cat, count, proportion in zip(category_counts.index, category_counts, proportions)]
 
     plt.figure(figsize=(8, 8))
@@ -40,6 +41,7 @@ def category_proportion_pie(df, column, title=None, filepath=None, n=None, inclu
     if filepath:
         plt.savefig(filepath)
     plt.show()
+
 
 def category_proportion_bar(df, column, title=None, filepath=None, n=None, include_others=True, add_labels=False):
     """
@@ -55,9 +57,9 @@ def category_proportion_bar(df, column, title=None, filepath=None, n=None, inclu
     """
     if column not in df.columns:
         raise ValueError(f"The column '{column}' is not in the DataFrame.")
-    
+
     category_counts = df[column].value_counts()
-    
+
     if n is not None and n < len(category_counts):
         top_categories = category_counts[:n]
         if include_others:
