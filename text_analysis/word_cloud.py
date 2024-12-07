@@ -4,6 +4,8 @@ import nltk
 from collections import Counter
 import re
 
+nltk.download() 
+
 def word_cloud(text_data):
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text_data)
     plt.figure(figsize=(10, 6))
