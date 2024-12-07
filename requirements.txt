@@ -7,6 +7,5 @@ xgboost
 tzdata
 scikit-learn
 tqdm
-nltk
 wordcloud
 
