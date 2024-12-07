@@ -1,6 +1,5 @@
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-import nltk
 from collections import Counter
 import re
 
@@ -11,40 +10,69 @@ def word_cloud(text_data):
     plt.axis('off') 
     plt.show()
 
-def word_frequency_pie_chart(text, include_others=True, n=10):
-    words = [word for word in nltk.word_tokenize(text) if re.match(r'\w+', word)]
-    word_counts = Counter(words)
+def tokenize_text(text):
+    """
+    Tokenizes the input text into words using regular expressions.
+    Returns a list of alphanumeric words.
+    """
+    return re.findall(r'\b\w+\b', text.lower())
 
+# when include_others=False 100% is only these n words
+def word_frequency_pie_chart(text, include_others=True, n=10):
+    """
+    Creates a pie chart of word frequency distribution from the input text.
+    """
+    # Tokenize the text
+    words = tokenize_text(text)
+    
+    # Count word occurrences
+    word_counts = Counter(words)
+    
+    # Get the n most common words
     most_common = word_counts.most_common(n)
     total_words = sum(word_counts.values())
-
+    
     if include_others:
-        other_count = total_words - sum(count for word, count in most_common)
+        # Compute "Others" category
+        other_count = total_words - sum(count for _, count in most_common)
         most_common.append(("Others", other_count))
-
+    
+    # Extract labels and sizes for the pie chart
     labels = [word for word, _ in most_common]
     sizes = [count / total_words * 100 for _, count in most_common]
-
+    
+    # Plot the pie chart
     plt.figure(figsize=(8, 8))
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     plt.axis('equal')
     plt.title('Word Frequency Distribution (Pie Chart)')
     plt.show()
 
+# when include_others=False 100% is still all words (including others, but they are not displayed)
 def word_frequency_bar_chart(text, include_others=True, n=10):
-    words = [word for word in nltk.word_tokenize(text) if re.match(r'\w+', word)]
+    """
+    Creates a bar chart of word frequency distribution from the input text.
+    """
+    # Tokenize the text
+    words = tokenize_text(text)
+    
+    # Count word occurrences
     word_counts = Counter(words)
-
+    
+    # Get the n most common words
     most_common = word_counts.most_common(n)
     total_words = sum(word_counts.values())
-
+    
     if include_others:
-        other_count = total_words - sum(count for word, count in most_common)
+        # Compute "Others" category
+        other_count = total_words - sum(count for _, count in most_common)
         most_common.append(("Others", other_count))
-
+    
+    # Extract labels and sizes for the bar chart
     labels = [word for word, _ in most_common]
     sizes = [count / total_words * 100 for _, count in most_common]
-
+    
+    # Plot the bar chart
     plt.figure(figsize=(10, 6))
     plt.bar(labels, sizes)
     plt.xlabel('Words')
