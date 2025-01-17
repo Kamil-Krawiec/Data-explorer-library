@@ -46,21 +46,3 @@ def time_series_plot(df, time_column, value_column, connect_points=True, marker=
         plt.savefig(filepath, bbox_inches='tight')
         print(f"Plot saved to {filepath}")
     plt.show()
-
-# TEST
-
-import numpy as np
-
-np.random.seed(42)
-date_range = pd.date_range(start='2024-01-01', end='2024-12-31', freq='D')
-trend = np.linspace(100, 500, len(date_range))
-seasonality = 50 * np.sin(2 * np.pi * date_range.dayofyear / 365)
-noise = np.random.normal(0, 30, len(date_range))
-
-data = {
-    'Date': date_range,
-    'Sales': trend + seasonality + noise
-}
-df = pd.DataFrame(data)
-
-time_series_plot(df, 'Date', 'Sales', connect_points=True, marker=False, filepath=None)

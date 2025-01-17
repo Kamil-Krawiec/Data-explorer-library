@@ -33,19 +33,3 @@ def missing_data_heatmap(df, describe_rows=False, filepath=None):
         plt.savefig(filepath, bbox_inches='tight')
         print(f"Heatmap saved to {filepath}")
     plt.show()
-
-# TEST
-
-import numpy as np
-import pandas as pd
-
-np.random.seed(2115)
-data = {
-    'A': np.random.choice([1, 2, np.nan], size=20, p=[0.3, 0.3, 0.4]),
-    'B': np.random.choice([5, 6, np.nan], size=20, p=[0.3, 0.4, 0.3]),
-    'C': np.random.choice([9, np.nan], size=20, p=[0.5, 0.5]),
-    'D': np.random.choice([13, 14, 15, np.nan], size=20, p=[0.30, 0.20, 0.20, 0.3]),
-}
-df = pd.DataFrame(data)
-
-missing_data_heatmap(df, describe_rows=True, filepath=None)
