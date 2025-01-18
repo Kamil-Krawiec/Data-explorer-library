@@ -1,5 +1,5 @@
 Data report
-========
+===========
 
 .. automodule:: data_report
     :members:

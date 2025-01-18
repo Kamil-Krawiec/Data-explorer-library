@@ -1,5 +1,5 @@
 Pre-analysis
-========
+============
 
 .. automodule:: pre_analysis
     :members:

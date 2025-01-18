@@ -1,5 +1,5 @@
 Text-Analysis
-========
+=============
 
 .. automodule:: text_analysis
     :members:
