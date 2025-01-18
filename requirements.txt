@@ -9,4 +9,5 @@ scikit-learn
 tqdm
 sphinx
 wordcloud
+sphinx_rtd_theme
 
