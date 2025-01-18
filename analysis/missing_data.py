@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.patches as mpatches
 
+
 def missing_data_heatmap(df, describe_rows=False, filepath=None):
     """
     Creates a heatmap to visualize the pattern of missing data across the dataset.
@@ -26,7 +27,7 @@ def missing_data_heatmap(df, describe_rows=False, filepath=None):
     yellow_patch = mpatches.Patch(color='yellow', label='Missing')
     purple_patch = mpatches.Patch(color='purple', label='Not Missing')
     plt.legend(handles=[yellow_patch, purple_patch], loc='upper left', bbox_to_anchor=(1, 1), fontsize=12)
-    
+
     plt.tight_layout()
 
     if filepath:

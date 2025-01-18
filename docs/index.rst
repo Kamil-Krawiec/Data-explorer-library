@@ -10,13 +10,21 @@ Welcome to Data-Explorer’s Documentation!
 Whether you’re looking to quickly assess data quality, explore feature importance, or visualize text data, **Data-Explorer** provides concise functions that integrate seamlessly into your Python data pipelines.
 
 Below, you’ll find an overview of each module:
+
 - **Analysis**
+
   Tools for feature correlation, feature importance, and related exploratory analyses.
+
 - **Data Report**
+
   Quick generation of initial data reports, numeric/categorical column summaries, and other diagnostic insights.
+
 - **Pre-Analysis**
+
   Utilities for plotting distributions, detecting outliers, generating correlation heatmaps, and more.
+
 - **Text Analysis**
+
   Functions for building word clouds, frequency charts, and other natural language data visualizations.
 
 .. toctree::
