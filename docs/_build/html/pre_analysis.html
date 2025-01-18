@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pre-analysis &mdash; Data explorer 1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=56dcb7b8"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Text-Analysis" href="text_analysis.html" />
+    <link rel="prev" title="Data report" href="data_report.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Data explorer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="analysis.html">Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_report.html">Data report</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pre-analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.categorical_value_count_plot"><code class="docutils literal notranslate"><span class="pre">categorical_value_count_plot()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.category_proportion_bar"><code class="docutils literal notranslate"><span class="pre">category_proportion_bar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.category_proportion_pie"><code class="docutils literal notranslate"><span class="pre">category_proportion_pie()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.create_correlation_heatmap"><code class="docutils literal notranslate"><span class="pre">create_correlation_heatmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.detect_outliers_3d"><code class="docutils literal notranslate"><span class="pre">detect_outliers_3d()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.feature_distribution_by_target"><code class="docutils literal notranslate"><span class="pre">feature_distribution_by_target()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.pair_plot"><code class="docutils literal notranslate"><span class="pre">pair_plot()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.save_all_distributions"><code class="docutils literal notranslate"><span class="pre">save_all_distributions()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre_analysis.visualize_distribution"><code class="docutils literal notranslate"><span class="pre">visualize_distribution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="text_analysis.html">Text-Analysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data explorer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Pre-analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pre_analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pre-analysis">
+<h1>Pre-analysis<a class="headerlink" href="#pre-analysis" title="Link to this heading"></a></h1>
+<dl class="py function" id="module-pre_analysis">
+<dt class="sig sig-object py" id="pre_analysis.categorical_value_count_plot">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">categorical_value_count_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(10,</span> <span class="pre">6)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pre_analysis/value_count_plot.html#categorical_value_count_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.categorical_value_count_plot" title="Link to this definition"></a></dt>
+<dd><p>Function that plots the count values of each of the category in the given DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame to plot categorical values from</p></li>
+<li><p><strong>fig_size</strong> – Figure size of the resulting subplots all shown in one image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.category_proportion_bar">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">category_proportion_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_others</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/category_proportion.html#category_proportion_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.category_proportion_bar" title="Link to this definition"></a></dt>
+<dd><p>Displays the proportion of the top <cite>n</cite> categories within a categorical feature using a bar chart.</p>
+<p>Parameters:
+- df: DataFrame containing the data.
+- column: The categorical column to visualize.
+- title: Title of the chart. If None, a default title is used.
+- filepath: Path to save the plot. If None, the plot is not saved.
+- n: Number of most popular categories to display.
+- include_others: Whether to include “Others” category if <cite>n</cite> is provided.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.category_proportion_pie">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">category_proportion_pie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_others</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/category_proportion.html#category_proportion_pie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.category_proportion_pie" title="Link to this definition"></a></dt>
+<dd><p>Displays the proportion of the top <cite>n</cite> categories within a categorical feature using a pie chart.</p>
+<p>Parameters:
+- df: DataFrame containing the data.
+- column: The categorical column to visualize.
+- title: Title of the chart. If None, a default title is used.
+- filepath: Path to save the plot. If None, the plot is not saved.
+- n: Number of most popular categories to display.
+- include_others: Whether to include “Others” category if <cite>n</cite> is provided.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.create_correlation_heatmap">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">create_correlation_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_categorical_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(10,</span> <span class="pre">10)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pre_analysis/create_correlation_heatmap.html#create_correlation_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.create_correlation_heatmap" title="Link to this definition"></a></dt>
+<dd><p>Create a correlation heatmap based on a data frame.</p>
+<p>This function handles data with categorical values by setting properly the ‘omit_categorical_data’ flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – data frame</p></li>
+<li><p><strong>omit_categorical_data</strong> – whether to omit categorical data or convert it to numerical dummy values</p></li>
+<li><p><strong>fig_size</strong> – size of the figure</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.detect_outliers_3d">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">detect_outliers_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_outliers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detection_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visualization_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/outliers.html#detect_outliers_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.detect_outliers_3d" title="Link to this definition"></a></dt>
+<dd><p>Detects outliers in multi-dimensional data and visualizes them in a 3D scatter plot based on specified features.</p>
+<p>Parameters:
+- data (pd.DataFrame or np.ndarray): The input data containing multiple features.
+- n_outliers (int): The number of outliers to detect. Ignored if contamination is set.
+- detection_features (list of str or int, optional): Features to use for outlier detection.</p>
+<blockquote>
+<div><p>If None, all features are used.</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>visualization_features (list of str or int, optional): Exactly three features to use for 3D visualization.</dt><dd><p>If None, the first three features are used.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>contamination (str or float): The proportion of outliers in the dataset.</dt><dd><p>If ‘auto’, uses n_outliers to determine contamination.</p>
+</dd>
+</dl>
+</li>
+<li><p>random_state (int): Random state for reproducibility.</p></li>
+</ul>
+<p>Returns:
+- outliers (pd.DataFrame): DataFrame containing the detected outliers.
+- fig (matplotlib.figure.Figure): The active 3D scatter plot figure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.feature_distribution_by_target">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">feature_distribution_by_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/feature_distribution_by_target.html#feature_distribution_by_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.feature_distribution_by_target" title="Link to this definition"></a></dt>
+<dd><p>Plots the distribution of a feature segmented by each category of the target variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – The DataFrame containing the data.</p></li>
+<li><p><strong>feature</strong> – The name of the feature to be plotted.</p></li>
+<li><p><strong>target</strong> – The name of the target variable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.pair_plot">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">pair_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_categorical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/pre_analysis/pair_plot.html#pair_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.pair_plot" title="Link to this definition"></a></dt>
+<dd><p>Function that create a pair plot between all of numerical values. If <cite>exclude_categorical</cite> flag is set to <cite>True</cite> then
+the function also includes categorical values as different hues.
+:param df: DataFrame to create a pair plot from
+:param exclude_categorical: Flag to exclude categorical values from plot</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.save_all_distributions">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">save_all_distributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/feature_distribution_by_target.html#save_all_distributions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.save_all_distributions" title="Link to this definition"></a></dt>
+<dd><p>Plots the distribution of each feature by each target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – The DataFrame containing the data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pre_analysis.visualize_distribution">
+<span class="sig-prename descclassname"><span class="pre">pre_analysis.</span></span><span class="sig-name descname"><span class="pre">visualize_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pre_analysis/distribution.html#visualize_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pre_analysis.visualize_distribution" title="Link to this definition"></a></dt>
+<dd><p>Visualize the distribution of data for each specified column.
+For numeric columns, include histogram, KDE, Q-Q plot, and boxplot.
+For categorical columns, include count plot and percentage distribution.</p>
+<p>Parameters:
+- data (pd.DataFrame): Input data.
+- columns (list of str): List of column names to visualize.
+- bins (int): Number of bins for histogram (numeric only).
+- save_to_file (str or None): File path to save the plots (if specified).</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="data_report.html" class="btn btn-neutral float-left" title="Data report" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="text_analysis.html" class="btn btn-neutral float-right" title="Text-Analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kamil Krawiec, Maciej Madry, Maciej Sieron.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

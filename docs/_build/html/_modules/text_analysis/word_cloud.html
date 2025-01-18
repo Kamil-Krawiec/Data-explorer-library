@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>text_analysis.word_cloud &mdash; Data explorer 1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=56dcb7b8"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Data explorer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../analysis.html">Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_report.html">Data report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pre_analysis.html">Pre-analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../text_analysis.html">Text-Analysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Data explorer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">text_analysis.word_cloud</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for text_analysis.word_cloud</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">wordcloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<div class="viewcode-block" id="word_cloud">
+<a class="viewcode-back" href="../../text_analysis.html#text_analysis.word_cloud">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">word_cloud</span><span class="p">(</span><span class="n">text_data</span><span class="p">):</span>
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">background_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">text_data</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tokenize_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tokenizes the input text into words using regular expressions.</span>
+<span class="sd">    Returns a list of alphanumeric words.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b\w+\b&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+<div class="viewcode-block" id="word_frequency_pie_chart">
+<a class="viewcode-back" href="../../text_analysis.html#text_analysis.word_frequency_pie_chart">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">word_frequency_pie_chart</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">include_others</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a pie chart of word frequency distribution from the input text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">tokenize_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    
+    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    
+    <span class="n">most_common</span> <span class="o">=</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">total_words</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">word_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    
+    <span class="k">if</span> <span class="n">include_others</span><span class="p">:</span>
+        <span class="n">other_count</span> <span class="o">=</span> <span class="n">total_words</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">count</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">)</span>
+        <span class="n">most_common</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Others&quot;</span><span class="p">,</span> <span class="n">other_count</span><span class="p">))</span>
+    
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">]</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">count</span> <span class="o">/</span> <span class="n">total_words</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">]</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Word Frequency Distribution (Pie Chart)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="c1"># when include_others=False 100% is still all words (including others, but they are not displayed)</span>
+<div class="viewcode-block" id="word_frequency_bar_chart">
+<a class="viewcode-back" href="../../text_analysis.html#text_analysis.word_frequency_bar_chart">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">word_frequency_bar_chart</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">include_others</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a bar chart of word frequency distribution from the input text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">tokenize_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    
+    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    
+    <span class="n">most_common</span> <span class="o">=</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">total_words</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">word_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    
+    <span class="k">if</span> <span class="n">include_others</span><span class="p">:</span>
+        <span class="n">other_count</span> <span class="o">=</span> <span class="n">total_words</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">count</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">)</span>
+        <span class="n">most_common</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Others&quot;</span><span class="p">,</span> <span class="n">other_count</span><span class="p">))</span>
+    
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">]</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">count</span> <span class="o">/</span> <span class="n">total_words</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">most_common</span><span class="p">]</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Words&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percentage of Occurrences&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Word Frequency Distribution (Bar Chart)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kamil Krawiec, Maciej Madry, Maciej Sieron.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
